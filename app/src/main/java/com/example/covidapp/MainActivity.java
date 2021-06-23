@@ -49,9 +49,6 @@ public class MainActivity extends AppCompatActivity {
         lista = new ArrayList<>();
         Pais pais = new Pais();
 
-        //AsyncHttpClient client = new AsyncHttpClient();
-        //RequestParams params = new RequestParams("country", "Global");
-
         this.retrofit = new Retrofit.Builder()
                 .baseUrl("https://covid-api.mmediagroup.fr/v1/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -72,24 +69,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*client.get("https://covid-api.mmediagroup.fr/v1/cases", params, new AsyncHttpResponseHandler() {
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                String data = new String(response);
-                try {
-                    loadData(data);
-                    Toast.makeText(getApplicationContext(),data ,Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });*/
     }
 
 }
