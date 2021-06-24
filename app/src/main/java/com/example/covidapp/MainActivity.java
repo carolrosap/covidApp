@@ -7,22 +7,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.example.covidapp.model.All;
-import com.example.covidapp.model.Pais;
-import com.loopj.android.http.*;
+import com.example.covidapp.model.Country;
 
-import cz.msebera.android.httpclient.Header;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,9 +18,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-    List<Map<String, String>> lista;
-    private TextView textView;
-    private  Retrofit retrofit;
+
+    private TextView population, deaths, confirmed, recovered;
+    private CovidApiService service = new CovidApiService();
+
+    //private  Retrofit retrofit;
+    private All all = new All();
+    private  Country country = new Country();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,30 +36,20 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
         setTitle(getResources().getString(R.string.app_name));
 
-        textView = findViewById(R.id.txtView);
+        population = findViewById(R.id.population);
+        recovered = findViewById(R.id.recovered);
+        deaths = findViewById(R.id.deaths);
+        confirmed = findViewById(R.id.confirmed);
 
-        lista = new ArrayList<>();
-        Pais pais = new Pais();
-
-        this.retrofit = new Retrofit.Builder()
-                .baseUrl("https://covid-api.mmediagroup.fr/v1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        CovidApi jsonApi = retrofit.create(CovidApi.class);
-        Call<All> call = jsonApi.loadData("https://covid-api.mmediagroup.fr/v1/cases?country=Global");
-
-        call.enqueue(new Callback<All>(){
-
-            @Override
-            public void onResponse(Call<All> call, Response<All> response) {
-                textView.setText(response.body().toString());
-            }
-
-            @Override
-            public void onFailure(Call<All> call, Throwable t) {
-
-            }
-        });
+        service.newRequest("country=Global");
+        if(!service.getFailureFlag()) {
+            country =  all.getCountry();
+            Log.d("pop", country.toString());
+            population.setText(String.valueOf(country.getPopulation()));
+            deaths.setText(String.valueOf(country.getPopulation()));
+            recovered.setText(String.valueOf(country.getRecovered()));
+            confirmed.setText(String.valueOf(country.getConfirmed()));
+        }
 
 
     }
