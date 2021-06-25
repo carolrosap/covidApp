@@ -2,7 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:onClick="openList">
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,5 +25,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/deaths"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="DETALHES"
+        android:onClick="openList"/>
 
 </LinearLayout>
