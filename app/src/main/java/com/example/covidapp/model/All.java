@@ -3,12 +3,6 @@ package com.example.covidapp.model;
 public class All {
     private Country All = new Country();
 
-
-
-   /* public All( Country c){
-        All = c;
-    } */
-
     public All(){
         super();
     }
