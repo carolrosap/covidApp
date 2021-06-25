@@ -67,16 +67,5 @@ public class Country {
         this.recovered = recovered;
     }
 
-    @Override
-    public String toString() {
-        return "Pais{" +
-                "population=" + population +
-                ", confirmed=" + confirmed +
-                ", recovered=" + recovered +
-                ", deaths=" + deaths +
-                ", country='" + country + '\'' +
-                ", continent='" + continent + '\'' +
-                ", abbreviation='" + abbreviation + '\'' +
-                '}';
-    }
+
 }
