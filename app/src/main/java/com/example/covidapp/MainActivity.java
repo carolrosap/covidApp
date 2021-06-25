@@ -2,6 +2,7 @@ package com.example.covidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Observable;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -17,12 +18,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView population, deaths, confirmed, recovered;
     private CovidApiService service = new CovidApiService();
-
-    //private  Retrofit retrofit;
     private All all = new All();
     private  Country country = new Country();
 
@@ -42,16 +43,27 @@ public class MainActivity extends AppCompatActivity {
         confirmed = findViewById(R.id.confirmed);
 
         service.newRequest("country=Global");
-        if(!service.getFailureFlag()) {
-            country =  all.getCountry();
-            Log.d("pop", country.toString());
-            population.setText(String.valueOf(country.getPopulation()));
-            deaths.setText(String.valueOf(country.getPopulation()));
-            recovered.setText(String.valueOf(country.getRecovered()));
-            confirmed.setText(String.valueOf(country.getConfirmed()));
-        }
+        service.getCall().enqueue(new Callback<All>() {
+            @Override
+            public void onResponse(Call<All> call, Response<All> response) {
+                all = response.body();
+                country = all.getCountry();
+                country =  all.getCountry();
+                Log.d("pop", country.toString());
+                population.setText(String.valueOf(country.getPopulation()));
+                deaths.setText(String.valueOf(country.getDeaths()));
+                recovered.setText(String.valueOf(country.getRecovered()));
+                confirmed.setText(String.valueOf(country.getConfirmed()));
+            }
 
+            @Override
+            public void onFailure(Call<All> call, Throwable t) {
+                //add toast
+                //failureFlag = true;
+            }
+        });
 
+        
     }
 
 }
