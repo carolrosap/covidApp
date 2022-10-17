@@ -1,3 +1,6 @@
 # covidApp
- Using the Covid-19-API
+ AndroidStudio App
+ App with informations and data about Covid
+ 
+ Made using the Covid-19-API
  https://github.com/M-Media-Group/Covid-19-API
