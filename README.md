@@ -1,5 +1,5 @@
 # covidApp
- AndroidStudio App
+ Sample AndroidStudio App <br>
  App with informations and data about Covid
  
  Made using the Covid-19-API
